@@ -1,0 +1,2 @@
+class DeckFrame:
+    pass

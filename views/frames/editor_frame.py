@@ -1,0 +1,2 @@
+class StudyFrame:
+    pass

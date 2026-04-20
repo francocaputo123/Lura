@@ -1,0 +1,2 @@
+class MainFrame:
+    pass
