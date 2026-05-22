@@ -147,7 +147,7 @@ lura/
 git clone https://github.com/francocaputo123/Lura.git
 cd Lura
 ./setup.sh        # En Linux/Mac
-.\setup.ps1       # En Windows (Trashdown)
+.\setup.ps1       # En Windows (Trashdown). Nota: En caso de que windows no te deje la ejecución de scripts  porque está deshabilitada. Usar este comando "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process"  
 ```
 
 ## Autores
