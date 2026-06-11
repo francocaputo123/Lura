@@ -1,5 +1,5 @@
 # LURA
-> Alternativa a Anki construida con Python, tkinter y SQLite. Spaced repetition con el algoritmo SM-2 sin depender de servidores externos para funcionar
+> Alternativa a Anki construida con Python, wxPython y SQLite. Spaced repetition con el algoritmo SM-2 sin depender de servidores externos para funcionar
 
 ## ¿Qué Es?
 Lura es una aplicación de escritorio para estudiar con cartas (flashcards) usando el algoritmo de *spaced repetition SM-2*. Las cartas que te cuestan aparecen seguido, mientras que las que más dominas aparecen cada vez menos.
@@ -7,7 +7,7 @@ Lura es una aplicación de escritorio para estudiar con cartas (flashcards) usan
 ## Stack
 | Capa | Tecnología |
 |------|-----------|
-| UI | tkinter |
+| UI | wxPython |
 | Lógica | Python 3.14 |
 | Base de datos | SQLite 3 |
 | Algoritmo | SM-2 |
@@ -151,7 +151,7 @@ cd Lura
 ```
 
 ## Autores
-Proyecto Universitario Desarrollado por **Ezequiel Monzón** y **Gian Franco Caputo**
+Proyecto Universitario Desarrollado por **Ezequiel Monzón**, **Gian Franco Caputo** y **Enzo Gabriel Silva**
 
 ### Distribución de tareas
 TODO
