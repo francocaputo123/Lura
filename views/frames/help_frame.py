@@ -20,7 +20,14 @@ class HelpFrame(wx.Panel):
 
         subtitle = wx.StaticText(
             self,
-            label="Esto está en desarrollo (como todo el resto de esta app verga (La ayuda la vamos a necesitar nosotros con esta app de mierda))",
+            label=(
+                "Esto está en desarrollo\n"
+                "(como todo el resto de esta app verga\n"
+                "(La ayuda la vamos a necesitar nosotros\n"
+                "con esta app de mierda))"
+            ),
+            size=(400, -1),
+            style=wx.ALIGN_CENTER_HORIZONTAL,
         )
         sizer.Add(subtitle, 0, wx.ALL | wx.CENTER, 10)
 
