@@ -1,1 +1,1 @@
-screeninfo==0.8.1
+wxPython==4.2.2
