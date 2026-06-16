@@ -24,9 +24,9 @@ class NavLink(wx.StaticText):
 
     def _set_style(self):
         if self._active:
-            self.SetForegroundColour(themes.FG_PRIMARY)
+            self.SetForegroundColour(themes.PALET["FG_PRIMARY"])
         else:
-            self.SetForegroundColour(themes.FG_SECONDARY)
+            self.SetForegroundColour(themes.PALET["FG_SECONDARY"])
 
     def _on_click(self, _):
         from views.navigator import show_frame
@@ -35,12 +35,12 @@ class NavLink(wx.StaticText):
 
     def _on_enter(self, _):
         if not self._active:
-            self.SetForegroundColour(themes.FG_PRIMARY)
+            self.SetForegroundColour(themes.PALET["FG_PRIMARY"])
             self.Refresh()
 
     def _on_leave(self, _):
         if not self._active:
-            self.SetForegroundColour(themes.FG_SECONDARY)
+            self.SetForegroundColour(themes.PALET["FG_SECONDARY"])
             self.Refresh()
 
     def _on_paint(self, event):
@@ -48,7 +48,7 @@ class NavLink(wx.StaticText):
         if self._active:
             dc = wx.PaintDC(self)
             w, h = self.GetSize()
-            dc.SetPen(wx.Pen(themes.CLR_ACCENT, 2))
+            dc.SetPen(wx.Pen(themes.PALET["CLR_ACCENT"], 2))
             dc.DrawLine(0, h - 2, w, h - 2)
 
 
@@ -57,7 +57,7 @@ class Navbar(wx.Panel):
 
     def __init__(self, parent, routes: list):
         super().__init__(parent)
-        self.SetBackgroundColour(themes.BG_NAVBAR)
+        self.SetBackgroundColour(themes.PALET["BG_NAVBAR"])
         self._links: list[NavLink] = []
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -65,15 +65,15 @@ class Navbar(wx.Panel):
         # App name / logo
         logo = wx.StaticText(self, label="Lura")
         logo.SetFont(themes.font(10, wx.FONTWEIGHT_BOLD))
-        logo.SetForegroundColour(themes.CLR_ACCENT)
-        sizer.Add(logo, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, themes.PAD_LG)
-        sizer.AddSpacer(themes.PAD_LG)
+        logo.SetForegroundColour(themes.PALET["CLR_ACCENT"])
+        sizer.Add(logo, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, themes.SPACING["PAD_LG"])
+        sizer.AddSpacer(themes.SPACING["PAD_LG"])
 
         # Nav links
         for label, frame_class in routes:
             link = NavLink(self, label, frame_class)
             sizer.Add(
-                link, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT, themes.PAD_MD
+                link, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT, themes.SPACING["PAD_MD"]
             )
             self._links.append(link)
 

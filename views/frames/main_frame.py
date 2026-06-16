@@ -38,22 +38,22 @@ class DeckRow(wx.Panel):
         self._build()
 
     def _build(self):
-        self.SetBackgroundColour(theme.BG_CARD)
+        self.SetBackgroundColour(theme.PALET["BG_CARD"])
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.AddSpacer(32)
 
         name_lbl = wx.StaticText(self, label=self.deck["name"])
-        name_lbl.SetForegroundColour(theme.FG_PRIMARY)
+        name_lbl.SetForegroundColour(theme.PALET["FG_PRIMARY"])
         name_lbl.SetFont(theme.font(10))
         sizer.Add(name_lbl, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.BOTTOM, 8)
 
         for count, color, tip in [
-            (self.deck["new"], theme.CLR_NEW, "Nuevas"),
-            (self.deck["learning"], theme.CLR_LEARNING, "Aprendiendo"),
-            (self.deck["review"], theme.CLR_REVIEW, "Repasar"),
+            (self.deck["new"], theme.PALET["CLR_NEW"], "Nuevas"),
+            (self.deck["learning"], theme.PALET["CLR_LEARNING"], "Aprendiendo"),
+            (self.deck["review"], theme.PALET["CLR_REVIEW"], "Repasar"),
         ]:
             lbl = wx.StaticText(self, label=str(count))
-            lbl.SetForegroundColour(color if count > 0 else theme.FG_SECONDARY)
+            lbl.SetForegroundColour(color if count > 0 else theme.PALET["FG_SECONDARY"])
             lbl.SetFont(
                 theme.font(10, wx.FONTWEIGHT_BOLD) if count > 0 else theme.font(10)
             )
@@ -69,11 +69,11 @@ class DeckRow(wx.Panel):
             widget.Bind(wx.EVT_LEFT_UP, self._on_click)
 
     def _on_enter(self, _):
-        self.SetBackgroundColour(theme.BG_CARD_HOVER)
+        self.SetBackgroundColour(theme.PALET["BG_CARD_HOVER"])
         self.Refresh()
 
     def _on_leave(self, _):
-        self.SetBackgroundColour(theme.BG_CARD)
+        self.SetBackgroundColour(theme.PALET["BG_CARD"])
         self.Refresh()
 
     def _on_click(self, _):
@@ -83,7 +83,7 @@ class DeckRow(wx.Panel):
         event.Skip()
         dc = wx.PaintDC(self)
         w, h = self.GetSize()
-        dc.SetPen(wx.Pen(theme.CLR_ACCENT, 1))
+        dc.SetPen(wx.Pen(theme.PALET["CLR_ACCENT"], 1))
         dc.DrawLine(32, h - 1, w, h - 1)
 
 
@@ -95,20 +95,20 @@ class CategoryPanel(wx.Panel):
         self._build()
 
     def _build(self):
-        self.SetBackgroundColour(theme.BG_DARK)
+        self.SetBackgroundColour(theme.PALET["BG_DARK"])
         self.main_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.header = wx.Panel(self)
-        self.header.SetBackgroundColour(theme.BG_CATEGORY)
+        self.header.SetBackgroundColour(theme.PALET["BG_CATEGORY"])
         h_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         self.arrow = wx.StaticText(self.header, label="▼")
-        self.arrow.SetForegroundColour(theme.FG_CATEGORY)
+        self.arrow.SetForegroundColour(theme.PALET["BG_CATEGORY"])
         self.arrow.SetFont(theme.font(9))
         h_sizer.Add(self.arrow, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT, 10)
 
         title = wx.StaticText(self.header, label=self.group["category"])
-        title.SetForegroundColour(theme.FG_CATEGORY)
+        title.SetForegroundColour(theme.PALET["FG_CATEGORY"])
         title.SetFont(theme.font(10, wx.FONTWEIGHT_BOLD))
         h_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.BOTTOM, 7)
 
@@ -116,7 +116,7 @@ class CategoryPanel(wx.Panel):
         self.main_sizer.Add(self.header, 0, wx.EXPAND)
 
         self.rows_panel = wx.Panel(self)
-        self.rows_panel.SetBackgroundColour(theme.BG_DARK)
+        self.rows_panel.SetBackgroundColour(theme.PALET["BG_DARK"])
         rows_sizer = wx.BoxSizer(wx.VERTICAL)
         for deck in self.group["decks"]:
             rows_sizer.Add(DeckRow(self.rows_panel, deck), 0, wx.EXPAND)
@@ -130,14 +130,14 @@ class CategoryPanel(wx.Panel):
             widget.Bind(
                 wx.EVT_ENTER_WINDOW,
                 lambda e: (
-                    self.header.SetBackgroundColour(theme.BG_CARD_HOVER)
+                    self.header.SetBackgroundColour(theme.PALET["BG_CARD_HOVER"])
                     or self.header.Refresh()
                 ),
             )
             widget.Bind(
                 wx.EVT_LEAVE_WINDOW,
                 lambda e: (
-                    self.header.SetBackgroundColour(theme.BG_CATEGORY)
+                    self.header.SetBackgroundColour(theme.PALET["BG_CARD_HOVER"])
                     or self.header.Refresh()
                 ),
             )
@@ -156,22 +156,22 @@ class MainFrame(wx.Panel):
         self._build()
 
     def _build(self):
-        self.SetBackgroundColour(theme.BG_DARK)
+        self.SetBackgroundColour(theme.PALET["BG_DARK"])
         outer = wx.BoxSizer(wx.VERTICAL)
 
         header = wx.Panel(self)
-        header.SetBackgroundColour(theme.BG_DARK)
+        header.SetBackgroundColour(theme.PALET["BG_DARK"])
         hdr_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         title = wx.StaticText(header, label="Mis Mazos")
-        title.SetForegroundColour(theme.FG_PRIMARY)
+        title.SetForegroundColour(theme.PALET["FG_PRIMARY"])
         title.SetFont(theme.font(18, wx.FONTWEIGHT_BOLD))
-        hdr_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, theme.PAD_LG)
+        hdr_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, theme.SPACING["PAD_LG"])
 
         for label, color in [
-            ("Nuevas", theme.CLR_NEW),
-            ("Aprendiendo", theme.CLR_LEARNING),
-            ("Repasar", theme.CLR_REVIEW),
+            ("Nuevas", theme.PALET["CLR_NEW"]),
+            ("Aprendiendo", theme.PALET["CLR_LEARNING"]),
+            ("Repasar", theme.PALET["CLR_REVIEW"]),
         ]:
             lbl = wx.StaticText(header, label=label)
             lbl.SetForegroundColour(color)
@@ -179,11 +179,11 @@ class MainFrame(wx.Panel):
             hdr_sizer.Add(lbl, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 24)
 
         header.SetSizer(hdr_sizer)
-        outer.Add(header, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, theme.PAD_MD)
+        outer.Add(header, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, theme.SPACING["PAD_MD"])
 
         scroll = wx.ScrolledWindow(self, style=wx.VSCROLL)
         scroll.SetScrollRate(0, 12)
-        scroll.SetBackgroundColour(theme.BG_DARK)
+        scroll.SetBackgroundColour(theme.PALET["BG_DARK"])
         scroll_sizer = wx.BoxSizer(wx.VERTICAL)
 
         for group in DECKS:
@@ -191,6 +191,6 @@ class MainFrame(wx.Panel):
 
         scroll.SetSizer(scroll_sizer)
         scroll.FitInside()
-        outer.Add(scroll, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, theme.PAD_MD)
+        outer.Add(scroll, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, theme.SPACING["PAD_MD"])
 
         self.SetSizer(outer)
