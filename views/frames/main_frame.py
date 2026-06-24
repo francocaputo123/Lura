@@ -193,4 +193,23 @@ class MainFrame(wx.Panel):
         scroll.FitInside()
         outer.Add(scroll, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, theme.PAD_MD)
 
+        footer = wx.Panel(self)
+        footer.SetBackgroundColour(theme.BG_NAVBAR)
+        ftr_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.import_btn = wx.Button(footer, label="Importar")
+        self.import_btn.SetFont(theme.font(10))
+        self.import_btn.Bind(wx.EVT_BUTTON, self._on_import)
+        ftr_sizer.Add(
+            self.import_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.PAD_MD
+        )
+
+        footer.SetSizer(ftr_sizer)
+        outer.Add(footer, 0, wx.EXPAND)
+
         self.SetSizer(outer)
+
+    def _on_import(self, _):
+        from views.frames.import_frame import ImportFrame
+
+        navigator.show_frame(ImportFrame)
