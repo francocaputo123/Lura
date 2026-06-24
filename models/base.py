@@ -18,6 +18,5 @@ class Model:
 
     def update(self):
         pass
+    
 
-    def del(self):
-        pass

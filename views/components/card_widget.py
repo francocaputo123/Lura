@@ -104,4 +104,3 @@ class CardWidget(wx.Panel):
 
         self.Refresh()
         self.Layout()
-

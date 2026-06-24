@@ -52,6 +52,13 @@ class StudyFrame(wx.Panel):
                     "margin": 10,
                     "flag" : wx.CENTER | wx.ALL
                 },
+                {
+                    "name" : "more",
+                    "label" : "Hola",
+                    "proportion" : 1,
+                    "margin": 10,
+                    "flag" : wx.CENTER | wx.ALL
+                }
 
             ],
             [
@@ -89,7 +96,7 @@ class StudyFrame(wx.Panel):
             ]
         ]
 
-        self.card = CardWidget(self, size=(400,500), data_buttons=self.data_buttons, position=self.card_pos, content=self.content , c_position=self.content_pos)
+        self.card = CardWidget(self, size=(500,600), data_buttons=self.data_buttons, position=self.card_pos, content=self.content , c_position=self.content_pos)
         self.sizer.Add(title, 0, wx.ALL | wx.CENTER, 20)
         self.sizer.Add(self.card, 0, wx.CENTER | wx.ALL, border=20)
 

@@ -49,7 +49,7 @@ class App(wx.Frame):
             self.sizer.Detach(self._current_frame)
             self._current_frame.Destroy()
         self._current_frame = frame_class(self.main_panel)
-        self._current_frame.SetBackgroundColour(themes.PALET["BG_CARD"])
+        self._current_frame.SetBackgroundColour(themes.PALET["BG_DARK"])
         self._current_frame.SetForegroundColour(themes.PALET["FG_PRIMARY"])
         self.sizer.Add(self._current_frame, 1, wx.EXPAND)
         self.navbar.set_active(frame_class)

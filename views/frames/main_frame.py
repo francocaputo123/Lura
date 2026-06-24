@@ -38,7 +38,7 @@ class DeckRow(wx.Panel):
         self._build()
 
     def _build(self):
-        self.SetBackgroundColour(theme.PALET["BG_CARD"])
+        self.SetBackgroundColour(theme.PALET["BG_DARK"])
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.AddSpacer(32)
 
@@ -73,7 +73,7 @@ class DeckRow(wx.Panel):
         self.Refresh()
 
     def _on_leave(self, _):
-        self.SetBackgroundColour(theme.PALET["BG_CARD"])
+        self.SetBackgroundColour(theme.PALET["BG_DARK"])
         self.Refresh()
 
     def _on_click(self, _):
