@@ -8,7 +8,7 @@ import wx
 PALET = {
     # --- Paleta de colores ---
     "BG_DARK": wx.Colour(30, 60, 45),
-    "BG_CARD": wx.Colour(103, 160, 59),
+    "BG_CARD": wx.Colour(35, 90, 59),
     "BG_CARD_HOVER": wx.Colour(45, 90, 65),
     "BG_CATEGORY": wx.Colour(38, 75, 55),
     "BG_NAVBAR": wx.Colour(25, 50, 38),
@@ -16,12 +16,14 @@ PALET = {
     "FG_PRIMARY": wx.Colour(230, 240, 235),
     "FG_SECONDARY": wx.Colour(160, 190, 170),
     "FG_CATEGORY": wx.Colour(200, 220, 210),
+    "FG_DARK" :wx.Colour(10, 10, 10),
 
     "CLR_NEW": wx.Colour(100, 180, 255),
     "CLR_LEARNING": wx.Colour(255, 165, 80),
     "CLR_REVIEW": wx.Colour(100, 215, 130),
     "CLR_ACCENT": wx.Colour(80, 160, 120),
     "CLR_DANGER": wx.Colour(220, 80, 80)
+
 }
 
 # --- Tipografía... ---
