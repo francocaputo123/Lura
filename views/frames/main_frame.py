@@ -194,14 +194,21 @@ class MainFrame(wx.Panel):
         outer.Add(scroll, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, theme.SPACING["PAD_MD"])
 
         footer = wx.Panel(self)
-        footer.SetBackgroundColour(theme.BG_NAVBAR)
+        footer.SetBackgroundColour(theme.PALET["BG_NAVBAR"])
         ftr_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         self.import_btn = wx.Button(footer, label="Importar")
         self.import_btn.SetFont(theme.font(10))
         self.import_btn.Bind(wx.EVT_BUTTON, self._on_import)
         ftr_sizer.Add(
-            self.import_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.PAD_MD
+            self.import_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.SPACING["PAD_MD"]
+        )
+
+        self.create_deck_btn = wx.Button(footer, label="Crear mazo")
+        self.create_deck_btn.SetFont(theme.font(10))
+        self.create_deck_btn.Bind(wx.EVT_BUTTON, self._on_create)
+        ftr_sizer.Add(
+            self.create_deck_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.SPACING["PAD_MD"]
         )
 
         footer.SetSizer(ftr_sizer)
@@ -213,3 +220,16 @@ class MainFrame(wx.Panel):
         from views.frames.import_frame import ImportFrame
 
         navigator.show_frame(ImportFrame)
+    
+    def _on_create(self, _) :
+        from ..components.deck_dialog import DeckDialog
+
+        dialog = DeckDialog(self, "Crear mazo")
+
+        if dialog.ShowModal() == wx.ID_OK :
+            from views.frames.deck_frame import DeckFrame
+
+            dialog.Destroy()
+            navigator.show_frame(DeckFrame)
+
+

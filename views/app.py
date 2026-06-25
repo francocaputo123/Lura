@@ -31,6 +31,7 @@ class App(wx.Frame):
             routes=[
                 ("Mis Mazos", MainFrame),
                 ("Estadísticas", StatsFrame),
+                ("Añadir", DeckFrame),
                 ("Opciones", OptionsFrame),
                 ("Ayuda", HelpFrame),
             ],
