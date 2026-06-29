@@ -1,34 +1,8 @@
 import wx
 
+from controllers.main_controller import load_deck_groups
 from views import navigator
 from views import themes as theme
-
-DECKS = [
-    {
-        "category": "English",
-        "decks": [
-            {"name": "Grammar", "new": 5, "learning": 12, "review": 3},
-            {"name": "To be", "new": 0, "learning": 8, "review": 7},
-        ],
-    },
-    {
-        "category": "Data Structures & Algorithms",
-        "decks": [
-            {"name": "Tipos de Datos", "new": 10, "learning": 4, "review": 1},
-            {"name": "Recursion", "new": 3, "learning": 6, "review": 0},
-            {"name": "Búsqueda", "new": 7, "learning": 2, "review": 4},
-            {"name": "Ordenar", "new": 0, "learning": 9, "review": 2},
-        ],
-    },
-    {
-        "category": "Java Programming",
-        "decks": [
-            {"name": "Tipos Primitivos", "new": 8, "learning": 1, "review": 5},
-            {"name": "Clases", "new": 2, "learning": 14, "review": 0},
-            {"name": "Memoria y punteros", "new": 6, "learning": 3, "review": 9},
-        ],
-    },
-]
 
 
 class DeckRow(wx.Panel):
@@ -186,8 +160,21 @@ class MainFrame(wx.Panel):
         scroll.SetBackgroundColour(theme.PALET["BG_DARK"])
         scroll_sizer = wx.BoxSizer(wx.VERTICAL)
 
-        for group in DECKS:
-            scroll_sizer.Add(CategoryPanel(scroll, group), 0, wx.EXPAND | wx.BOTTOM, 2)
+        groups = load_deck_groups()
+        if groups:
+            for group in groups:
+                scroll_sizer.Add(
+                    CategoryPanel(scroll, group), 0, wx.EXPAND | wx.BOTTOM, 2
+                )
+        else:
+            empty_lbl = wx.StaticText(
+                scroll,
+                label="No hay mazos.\nCreá un mazo o importalo desde Anki o NotebookLM",
+                style=wx.ALIGN_CENTER_HORIZONTAL,
+            )
+            empty_lbl.SetForegroundColour(theme.FG_SECONDARY)
+            empty_lbl.SetFont(theme.font(12))
+            scroll_sizer.Add(empty_lbl, 1, wx.ALIGN_CENTER | wx.ALL, theme.PAD_LG)
 
         scroll.SetSizer(scroll_sizer)
         scroll.FitInside()
@@ -217,10 +204,20 @@ class MainFrame(wx.Panel):
         self.SetSizer(outer)
 
     def _on_import(self, _):
+        with wx.FileDialog(
+            self,
+            "Seleccionar mazo de Anki",
+            wildcard="Anki packages (*.apkg|*.apkg)",
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        ) as dlg:
+            if dlg.ShowModal() == wx.ID_CANCEL:
+                return
+            selected_path = dlg.GetPath()
+
         from views.frames.import_frame import ImportFrame
 
-        navigator.show_frame(ImportFrame)
-    
+        navigator.show_frame(ImportFrame, selected_path=selected_path)
+
     def _on_create(self, _) :
         from ..components.deck_dialog import DeckDialog
 
@@ -231,5 +228,3 @@ class MainFrame(wx.Panel):
 
             dialog.Destroy()
             navigator.show_frame(DeckFrame)
-
-

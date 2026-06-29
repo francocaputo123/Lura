@@ -13,10 +13,11 @@ def register_app(app):
     _app = app
 
 
-def show_frame(frame_class):
+def show_frame(frame_class, *args, **kwargs):
     """Navega a un panel de forma universal, es simplemente una instancia de lo que definimos en app
     Args:
         frame_class: Clase del panel (wx.Panel) a mostrar.
+        *args, **kwargs: Argumentos adicionales que se pasan al constructor del panel.
 
     Raises:
         RuntimeError: Si no se ha registrado una App antes de llamar a esta función.
@@ -25,4 +26,4 @@ def show_frame(frame_class):
         raise RuntimeError(
             "App not registered with navigator. Llamá a register_app() primero."
         )
-    _app.show_frame(frame_class)
+    _app.show_frame(frame_class, *args, **kwargs)

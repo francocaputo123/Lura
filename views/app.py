@@ -44,12 +44,12 @@ class App(wx.Frame):
 
         self.Centre()
 
-    def show_frame(self, frame_class):
+    def show_frame(self, frame_class, *args, **kwargs):
         """Básicamente remplaza el panel actual por uno nuevo."""
         if self._current_frame is not None:
             self.sizer.Detach(self._current_frame)
             self._current_frame.Destroy()
-        self._current_frame = frame_class(self.main_panel)
+        self._current_frame = frame_class(self.main_panel, *args, **kwargs)
         self._current_frame.SetBackgroundColour(themes.PALET["BG_DARK"])
         self._current_frame.SetForegroundColour(themes.PALET["FG_PRIMARY"])
         self.sizer.Add(self._current_frame, 1, wx.EXPAND)
