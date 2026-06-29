@@ -35,7 +35,7 @@ def sum(a, b):
 
     Args:
         a: El primer número
-        quality: El segúndo número
+        b: El segúndo número
 
     Returns:
         la suma del número a y el número b
