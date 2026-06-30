@@ -15,12 +15,12 @@ class ImportFrame(wx.Panel):
         self._build()
 
     def _build(self):
-        self.SetBackgroundColour(theme.BG_DARK)
+        self.SetBackgroundColour(theme.PALET["BG_DARK"])
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
 
         title = wx.StaticText(self, label="Importar mazo de Anki")
-        title.SetForegroundColour(theme.FG_PRIMARY)
+        title.SetForegroundColour(theme.PALET["FG_PRIMARY"])
         title.SetFont(theme.font(18, wx.FONTWEIGHT_BOLD))
         sizer.Add(title, 0, wx.ALL | wx.CENTER, 20)
 
@@ -33,7 +33,7 @@ class ImportFrame(wx.Panel):
             label=file_label,
             style=wx.ALIGN_CENTER_HORIZONTAL,
         )
-        self.file_lbl.SetForegroundColour(theme.FG_SECONDARY)
+        self.file_lbl.SetForegroundColour(theme.PALET["FG_SECONDARY"])
         self.file_lbl.SetFont(theme.font(10))
         sizer.Add(self.file_lbl, 0, wx.ALL | wx.CENTER, 10)
 
@@ -44,7 +44,7 @@ class ImportFrame(wx.Panel):
         sizer.Add(self.import_btn, 0, wx.ALL | wx.CENTER, 10)
 
         self.status_lbl = wx.StaticText(self, label="")
-        self.status_lbl.SetForegroundColour(theme.FG_SECONDARY)
+        self.status_lbl.SetForegroundColour(theme.PALET["FG_SECONDARY"])
         self.status_lbl.SetFont(theme.font(10))
         sizer.Add(self.status_lbl, 0, wx.ALL | wx.CENTER, 10)
 

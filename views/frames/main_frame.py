@@ -172,9 +172,9 @@ class MainFrame(wx.Panel):
                 label="No hay mazos.\nCreá un mazo o importalo desde Anki o NotebookLM",
                 style=wx.ALIGN_CENTER_HORIZONTAL,
             )
-            empty_lbl.SetForegroundColour(theme.FG_SECONDARY)
+            empty_lbl.SetForegroundColour(theme.PALET["FG_SECONDARY"])
             empty_lbl.SetFont(theme.font(12))
-            scroll_sizer.Add(empty_lbl, 1, wx.ALIGN_CENTER | wx.ALL, theme.PAD_LG)
+            scroll_sizer.Add(empty_lbl, 1, wx.ALIGN_CENTER | wx.ALL, theme.SPACING["PAD_LG"])
 
         scroll.SetSizer(scroll_sizer)
         scroll.FitInside()
