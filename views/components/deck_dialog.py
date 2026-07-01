@@ -1,7 +1,11 @@
 import wx
 from views import themes as theme
 
-from models.decks import Model 
+from models.decks import Model
+
+"""
+Componente encargado de crear el mazo e insertarlo en la base de datos.
+"""
 
 class DeckDialog(wx.Dialog) :
     def __init__(self, parent, title):
@@ -24,11 +28,14 @@ class DeckDialog(wx.Dialog) :
         self.label.SetFont(theme.font(20))
         self.ipt = wx.TextCtrl(self.main_panel, size=(200,-1))
         self.ipt.SetValue("Escribe un nombre...")
+        self.ipt_category = wx.TextCtrl(self.main_panel, size=(200,-1))
+        self.ipt_category.SetValue("Escribe una categoria...")
         self.vbox.Add(self.label, 0, wx.ALIGN_CENTER | wx.TOP, border=10)
         self.vbox.Add(self.ipt, 0, wx.ALIGN_CENTER | wx.TOP, border=10)
+        self.vbox.Add(self.ipt_category, 0, wx.ALIGN_CENTER | wx.TOP, border=10)
 
         #botones
-        self.confirm_btn = wx.Button(self.main_panel,wx.ID_OK, label="Crear mazo")        
+        self.confirm_btn = wx.Button(self.main_panel,wx.ID_OK, label="Crear mazo")
         self.close_btn = wx.Button(self.main_panel,wx.ID_CANCEL, label="Cancelar")
 
         self.confirm_btn.SetBackgroundColour(theme.PALET["CLR_NEW"])
@@ -54,18 +61,19 @@ class DeckDialog(wx.Dialog) :
 
     def _on_accept(self, event) :
         deck_name = self.ipt.GetValue()
-        
-        if not deck_name or deck_name == "Escribe un nombre...":
-            wx.MessageBox("El nombre del mazo no puede estar vacío.", "Error", wx.OK | wx.ICON_ERROR)
+        category = self.ipt_category.GetValue()
+
+        if (not deck_name or deck_name == "Escribe un nombre...") and (not category or category == "Escribe una categoria..."):
+            wx.MessageBox("Faltan campos.", "Error", wx.OK | wx.ICON_ERROR)
             return
-        
+
         #llamamos al modelo, caso de que existe el nombre, devolvera false, sino true
         model = Model()
-        response = model.create_deck(deck_name)
+        response = model.create_deck(deck_name, category)
         if response :
             wx.MessageBox("Mazo creado con éxito", "Mazo creado", wx.OK)
         else :
             wx.MessageBox("Ya existe un mazo con ese nombre", "Error", wx.OK | wx.ICON_ERROR)
             return
-        
+
         event.Skip()

@@ -7,6 +7,7 @@ from views.frames.help_frame import HelpFrame
 from views.frames.main_frame import MainFrame
 from views.frames.options_frame import OptionsFrame
 from views.frames.stats_frame import StatsFrame
+from views.frames.study_frame import StudyFrame
 from views.navigator import register_app
 
 

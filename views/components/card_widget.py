@@ -2,16 +2,6 @@ import wx
 
 from views import themes
 
-
-CARD_CONTENT = [
-    {
-        "question" : "En una lista enlazada tenemos dos tipos importantes de variables, mencione cuales son."
-    },
-    {
-        "answer" : "Son head y tail"
-    }
-]
-
 class CardWidget(wx.Panel):
     def __init__(self, parent, size, data_buttons, content, **kwargs):
         self.card_position = kwargs.pop("position", 0)
@@ -32,12 +22,12 @@ class CardWidget(wx.Panel):
         self.SetSizer(self.main_sizer)
 
         self.content_layout = self._content(content)
-        self.main_sizer.Add(self.content_layout, 1, wx.ALL, 15)
+        self.main_sizer.Add(self.content_layout, 1, wx.ALL | wx.EXPAND, 15)
 
         self.buttons= self._buttons_content(data_buttons)
         self.main_sizer.Add(self.buttons, 0, wx.EXPAND , 0)
 
-        self.Fit()
+        self.Layout()
     def _content(self, content) :
         content_panel = wx.Panel(self)
 
@@ -45,13 +35,17 @@ class CardWidget(wx.Panel):
 
         inside_sizer = wx.BoxSizer(wx.VERTICAL)
 
+        width = self.base_width - 60
+
         for data in content[self.content_position] :
             text = wx.StaticText(content_panel, label=data["label"])
             text.SetForegroundColour(data["color"])
             font = wx.Font(*data["font"])
             text.SetFont(font)
 
-            inside_sizer.Add(text, 1, wx.ALL  , 15)
+            text.Wrap(width)
+
+            inside_sizer.Add(text, 0, wx.ALL | wx.EXPAND, 15)
 
         content_panel.SetSizer(inside_sizer)
         return content_panel
@@ -67,6 +61,8 @@ class CardWidget(wx.Panel):
         for data in data_buttons[self.card_position] :
             #se crea el boton contenedor y se le asigna a la clase con setattr
             btn = wx.Button(content_buttons, label=data["label"], size=wx.DefaultSize)
+            if data["color"] :
+                btn.SetBackgroundColour(data["color"])
 
             setattr(self, f"btn_{data['name']}", btn)
             if "func" in data :

@@ -2,7 +2,7 @@ import wx
 
 from views.components.back_button import BackButton
 
-from models.decks import Model 
+from models.decks import Model
 
 from views import themes as theme
 
@@ -13,6 +13,7 @@ class DeckFrame(wx.Panel):
         self._build()
 
     def _build(self) :
+        self.main_sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -20,7 +21,7 @@ class DeckFrame(wx.Panel):
         title.SetForegroundColour(wx.Colour(230, 240, 235))
         font = wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
         title.SetFont(font)
-        self.sizer.Add(title, 0, wx.ALL | wx.CENTER, 20)
+        self.main_sizer.Add(title, 0, wx.ALL | wx.CENTER, 20)
 
         #seccion que funciona como formulario
         self.decks_combo()
@@ -30,7 +31,11 @@ class DeckFrame(wx.Panel):
         self.sizer.Add(self.save_btn, 0, wx.ALL | wx.CENTER, 10)
         self.sizer.Add(BackButton(self), 0, wx.ALL | wx.CENTER, 10)
 
-        self.SetSizer(self.sizer)
+        self.main_sizer.Add((0, 0), 1, wx.EXPAND)
+        self.main_sizer.Add(self.sizer, 0, wx.CENTER)
+        self.main_sizer.Add((0, 0), 1, wx.EXPAND)
+
+        self.SetSizer(self.main_sizer)
 
         self.Layout()
 
@@ -39,7 +44,30 @@ class DeckFrame(wx.Panel):
         self.save_btn.Bind(wx.EVT_BUTTON, self._add_card)
         self.ipt_front.Bind(wx.EVT_TEXT, self._expand_input)
         self.ipt_back.Bind(wx.EVT_TEXT, self._expand_input)
+        self.Bind(wx.EVT_SIZE, self._on_resize)
 
+
+    def _on_resize(self, event) :
+        w, h = self.GetParent().GetSize()
+
+        if w > 800 and h > 500 :
+            self.ipt_front.SetMinSize((600, -1))
+            self.ipt_back.SetMinSize((600, -1))
+            self.combo.SetMinSize((600, -1))
+            for widget in [self.label_combo, self.label_back, self.label_front] :
+                widget.SetFont(theme.font(16))
+                widget.SetMinSize((120, -1))
+
+        else :
+            self.ipt_front.SetMinSize((400, -1))
+            self.ipt_back.SetMinSize((400, -1))
+            self.combo.SetMinSize((400, -1))
+            for widget in [self.label_combo, self.label_back, self.label_front] :
+                widget.SetFont(theme.font(12))
+                widget.SetMinSize((110, -1))
+
+        self.Layout()
+        event.Skip()
 
     def _get_decks(self) :
         try :
@@ -53,11 +81,11 @@ class DeckFrame(wx.Panel):
             return decks
         except Exception as e :
             wx.MessageBox(
-                f"No se pudieron obtener los mazos: {e}", 
-                "Error de Base de Datos", 
+                f"No se pudieron obtener los mazos: {e}",
+                "Error de Base de Datos",
                 wx.OK | wx.ICON_ERROR
             )
-    
+
     def decks_combo(self) :
         #obtenemos los mazos
         decks = self._get_decks()
@@ -67,9 +95,10 @@ class DeckFrame(wx.Panel):
         self.label_combo = wx.StaticText(self, label="Mis mazos :")
         self.label_combo.SetFont(theme.font(12))
         self.label_combo.SetMinSize((110, -1))
+        self.label_combo.SetForegroundColour(theme.PALET["FG_PRIMARY"])
         self.combo = wx.Choice(self, size=(400,-1))
         self.hbox.Add(self.label_combo, 0, wx.ALIGN_CENTER | wx.RIGHT, border=10)
-        self.hbox.Add(self.combo, 0, wx.ALIGN_CENTER , 0)
+        self.hbox.Add(self.combo, 1, wx.ALIGN_CENTER , 0)
 
         self.sizer.Add(self.hbox,0, wx.ALIGN_CENTER | wx.ALL, border=10 )
 
@@ -86,7 +115,7 @@ class DeckFrame(wx.Panel):
     def _on_change(self,event) :
         selection = self.combo.GetSelection()
         return selection
-    
+
     def cards_input(self) :
         #contenedor principal horizontal para contener a los verticales
         self.vbox_cards_container = wx.BoxSizer(wx.VERTICAL)
@@ -97,9 +126,11 @@ class DeckFrame(wx.Panel):
         self.label_front = wx.StaticText(self, label="Anverso: ")
         self.label_front.SetFont(theme.font(12))
         self.label_front.SetMinSize((110, -1))
+        self.label_front.SetForegroundColour(theme.PALET["FG_PRIMARY"])
         self.label_back = wx.StaticText(self, label="Reverso: ")
         self.label_back.SetFont(theme.font(12))
         self.label_back.SetMinSize((110, -1))
+        self.label_back.SetForegroundColour(theme.PALET["FG_PRIMARY"])
 
         #inputs
         self.ipt_front = wx.TextCtrl(self, size=(400, -1), style=wx.TE_MULTILINE | wx.HSCROLL)
@@ -108,7 +139,7 @@ class DeckFrame(wx.Panel):
         #ANVERSO
         self.hbox_front.Add(self.label_front, 0, wx.ALIGN_TOP | wx.RIGHT, 10)
         self.hbox_front.Add(self.ipt_front, 1, wx.EXPAND)
-        
+
         #REVERSO
         self.hbox_back.Add(self.label_back, 0, wx.ALIGN_TOP | wx.RIGHT, 10)
         self.hbox_back.Add(self.ipt_back, 1, wx.EXPAND)
@@ -136,7 +167,7 @@ class DeckFrame(wx.Panel):
         _, height_line = ipt.GetTextExtent("AG")
 
         padding = 5
-        
+
         new_height = (lines * height_line) + padding
 
         if lines == 1 :
@@ -167,10 +198,12 @@ class DeckFrame(wx.Panel):
 
         if response :
             wx.MessageBox(
-                "Tarjeta añadida con éxito.", 
-                "Éxito", 
+                "Tarjeta añadida con éxito.",
+                "Éxito",
                 wx.OK | wx.ICON_INFORMATION
             )
+            self.ipt_back.Clear()
+            self.ipt_front.Clear()
 
     def _validate_fields(self) :
         decks = self._get_decks()
@@ -179,19 +212,19 @@ class DeckFrame(wx.Panel):
         '''
         if not decks :
             wx.MessageBox(
-                "No puedes agregar cartas, aun no has creado nigun mazo.", 
-                "No hay mazos", 
+                "No puedes agregar cartas, aun no has creado nigun mazo.",
+                "No hay mazos",
                 wx.OK | wx.ICON_ERROR
             )
             return False
-        
+
         front = self.ipt_front.GetValue().strip()
         back = self.ipt_back.GetValue().strip()
 
         if front == "" or back == "" :
             wx.MessageBox(
-                "Faltan campos.", 
-                "", 
+                "Faltan campos.",
+                "",
                 wx.OK | wx.ICON_ERROR
             )
             return False
@@ -204,8 +237,8 @@ class DeckFrame(wx.Panel):
             return response
         except Exception as e :
             wx.MessageBox(
-                f"Hubo un erro al insertar la carta: {e}", 
-                "Error en la base de datos", 
+                f"Hubo un erro al insertar la carta: {e}",
+                "Error en la base de datos",
                 wx.OK | wx.ICON_ERROR
             )
-            return 
+            return
