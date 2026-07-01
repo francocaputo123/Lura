@@ -23,6 +23,7 @@ class DeleteDeck(wx.Dialog) :
 
         #titulo y combo
         self.label = wx.StaticText(self.main_panel, label="Borrar mazo")
+        self.label.SetFont(theme.font(15))
         self.combo = wx.Choice(self.main_panel, size=(300,-1))
 
         if not self.decks :
