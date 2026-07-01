@@ -80,11 +80,13 @@ class Model :
                 c.repetitions,
                 c.ease_factor,
                 c.next_review,
-                DATE(c.created_at) as created_at
+                DATE(c.created_at) as created_at,
+                cm.filename,
+                cm.media_type
             FROM
                 cards c
-            JOIN
-                cards_today ct ON c.id = ct.card_id
+            JOIN cards_today ct ON c.id = ct.card_id
+            LEFT JOIN card_media as cm ON cm.card_id = c.id
             WHERE
                 ct.date_fetched = DATE('now')
                 AND ct.reviewed = 0
@@ -109,6 +111,8 @@ class Model :
                     "ease_factor": row["ease_factor"],
                     "next_review": row["next_review"],
                     "created_at": row["created_at"],
+                    "filename" : row["filename"],
+                    "media_type" : row["media_type"]
                 }
                 for row in rows
             ]
@@ -214,29 +218,24 @@ class Model :
         try :
             query = """
             SELECT
-                id,
-                deck_id,
-                front,
-                back,
-                interval,
-                repetitions,
-                ease_factor,
-                next_review,
-                created_at
-            FROM
-                cards
-            WHERE id in(
-                    SELECT
-                        id
-                    FROM
-                        cards
-                    WHERE deck_id = ?
-                    AND next_review <= DATE('now')
-                    AND DATE(created_at) != next_review
-                    ORDER BY
-                    RANDOM()
-                    LIMIT 20
-                );
+                c.id,
+                c.deck_id,
+                c.front,
+                c.back,
+                c.interval,
+                c.repetitions,
+                c.ease_factor,
+                c.next_review,
+                c.created_at,
+                cm.filename,
+                cm.media_type
+            FROM cards c
+            LEFT JOIN card_media cm ON c.id = cm.card_id
+            WHERE c.deck_id = ?
+            AND c.next_review <= DATE('now')
+            AND DATE(c.created_at) != c.next_review
+            ORDER BY RANDOM()
+            LIMIT 20;
             """
             cursor.execute(query, (deck_id,))
             rows = cursor.fetchall()

@@ -150,22 +150,39 @@ class StudyFrame(wx.Panel):
 
         front = card_data.get("front", "No hay anverso")
         back = card_data.get("back", "No hay reverso")
+        deck_id = card_data.get("deck_id", 1)
 
-        return [
-            [
-                {
-                    "label" : front,
-                    "color" : themes.PALET["FG_PRIMARY"],
-                    "font" : (15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
-                }
-            ],
-            [
-                {
+        #media
+        images = card_data.get("images", [])
+        audios = card_data.get("audios", [])
+
+        front_card = [
+            {
+                "type" : "text",
+                "label" : front,
+                "color" : themes.PALET["FG_PRIMARY"],
+                "font" : (15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+            }
+        ]
+
+        back_card = [
+            {
+                    "type" : "text",
                     "label" : back,
                     "color" : themes.PALET["FG_PRIMARY"],
                     "font" : (15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
-                }
-            ]
+            }
+        ]
+
+        for img_data in images:
+            front_card.append(img_data)
+
+        for audio_data in audios:
+            back_card.append(audio_data)
+
+        return [
+            front_card,
+            back_card
         ]
 
     def _handle_next_card(self, quality) :

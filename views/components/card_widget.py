@@ -1,6 +1,7 @@
 import wx
 
 from views import themes
+from pathlib import Path
 
 class CardWidget(wx.Panel):
     def __init__(self, parent, size, data_buttons, content, **kwargs):
@@ -38,14 +39,39 @@ class CardWidget(wx.Panel):
         width = self.base_width - 60
 
         for data in content[self.content_position] :
-            text = wx.StaticText(content_panel, label=data["label"])
-            text.SetForegroundColour(data["color"])
-            font = wx.Font(*data["font"])
-            text.SetFont(font)
 
-            text.Wrap(width)
+            if "type" not in data or data.get("type") == "text":
+                text = wx.StaticText(content_panel, label=data["label"])
+                text.SetForegroundColour(data["color"])
+                font = wx.Font(*data["font"])
+                text.SetFont(font)
+                text.Wrap(width)
 
-            inside_sizer.Add(text, 0, wx.ALL | wx.EXPAND, 15)
+                inside_sizer.Add(text, 0, wx.ALL | wx.EXPAND, 15)
+
+            elif data.get("type") == "image":
+                #tomamos el nombre
+                filename = data["file"]
+                sub_dir = data["id"]
+                abs_path = Path(f"public/media/{sub_dir}/{filename}").resolve()
+
+                try:
+                    img = wx.Image(str(abs_path), wx.BITMAP_TYPE_ANY)
+
+                    img_w = img.GetWidth()
+                    img_h = img.GetHeight()
+                    if img_w > width:
+                        new_w = width
+                        new_h = int((img_h * width) / img_w)
+                        img = img.Scale(new_w, new_h, wx.IMAGE_QUALITY_HIGH)
+
+                    bmp = wx.StaticBitmap(content_panel, wx.ID_ANY, wx.Bitmap(img))
+                    inside_sizer.Add(bmp, 0, wx.ALIGN_CENTER | wx.ALL, 15)
+
+                except Exception as e:
+                    print(f"Error al cargar la imagen {filename}: {e}")
+                    error = wx.StaticText(content_panel, label=f"[Imagen no encontrada: {filename}]")
+                    inside_sizer.Add(error, 0, wx.ALL, 15)
 
         content_panel.SetSizer(inside_sizer)
         return content_panel

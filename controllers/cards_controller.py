@@ -14,7 +14,45 @@ class CardController :
         if not cards :
             return []
 
-        return cards
+        grouped_cards = {}
+
+        """
+        Como la bd puede traer filas repetidas (si hay imagen y audio)
+        se agupan en un solo array para cada uno y extraerlo despues
+        """
+        for row in cards:
+
+            card_id = row["id"]
+            if card_id not in grouped_cards:
+                grouped_cards[card_id] = {
+                    "id": row["id"],
+                    "deck_id": row["deck_id"],
+                    "front": row["front"],
+                    "back": row["back"],
+                    "interval": row["interval"],
+                    "repetitions": row["repetitions"],
+                    "ease_factor": row["ease_factor"],
+                    "next_review": row["next_review"],
+                    "created_at": row["created_at"],
+                    "images": [],
+                    "audios": []
+                }
+
+            if row["filename"]:
+                if row["media_type"] == "image":
+                    grouped_cards[card_id]["images"].append({
+                        "type": "image",
+                        "file": row["filename"],
+                        "id": deck_id
+                    })
+                elif row["media_type"] == "audio":
+                    grouped_cards[card_id]["audios"].append({
+                        "type": "audio",
+                        "file": row["filename"],
+                        "id": deck_id
+                    })
+
+        return list(grouped_cards.values())
 
     def update_next_review(self, card_id, deck_id, quality) :
         if not card_id and not deck_id and not quality:
@@ -23,7 +61,6 @@ class CardController :
         model = Model()
 
         response = model.update_next_review(card_id, deck_id, quality)
-
 
         if not response :
             return False
