@@ -215,7 +215,7 @@ class MainFrame(wx.Panel):
         with wx.FileDialog(
             self,
             "Seleccionar mazo de Anki",
-            wildcard="Anki packages (*.apkg|*.apkg)",
+            wildcard="Anki packages (*.apkg)|*.apkg;*.APKG|All files|*",
             style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
         ) as dlg:
             if dlg.ShowModal() == wx.ID_CANCEL:

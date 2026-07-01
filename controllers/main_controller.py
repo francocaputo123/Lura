@@ -25,8 +25,7 @@ def load_deck_groups():
         counts = db_connection.execute(
             """
             SELECT
-                id,
-                COALESCE(SUM(CASE WHEN repetitions = 0 THEN 1 ELSE 0 END), 0) AS new,
+                MIN(COALESCE(SUM(CASE WHEN repetitions = 0 THEN 1 ELSE 0 END), 0), 20) AS new,
                 COALESCE(SUM(CASE WHEN repetitions > 0 AND interval < 1 AND next_review <= date('now') THEN 1 ELSE 0 END), 0) AS learning,
                 COALESCE(SUM(CASE WHEN repetitions > 0 AND interval >= 1 AND next_review <= date('now') THEN 1 ELSE 0 END), 0) AS review
             FROM cards
