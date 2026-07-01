@@ -85,7 +85,7 @@ class CardWidget(wx.Panel):
 
         return content_buttons
 
-    #esta funcion sirvepara actualizar la posicion del array
+    #esta funcion sirve para actualizar la posicion del array
     def update_position(self, new_card_position, new_content_position , data_buttons, content):
         self.card_position = new_card_position
         self.content_position = new_content_position
