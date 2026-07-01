@@ -26,6 +26,14 @@ CREATE TABLE IF NOT EXISTS reviews (
     reviewed_at TEXT DEFAULT (datetime('now'))
 );
 
+CREATE TABLE IF NOT EXISTS card_media (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_id     INTEGER NOT NULL REFERENCES cards(id) ON DELETE CASCADE,
+    filename    TEXT NOT NULL,
+    media_type  TEXT NOT NULL CHECK(media_type IN ('image', 'audio')),
+    UNIQUE(card_id, filename, media_type)
+);
+
 CREATE TABLE IF NOT EXISTS cards_today (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     card_id INTEGER NOT NULL REFERENCES cards(id) ON DELETE CASCADE,
