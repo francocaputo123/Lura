@@ -8,4 +8,4 @@ __pycache__/
 .DS_Store
 Thumbs.db
 public/media/
-
+example_apkgs/
