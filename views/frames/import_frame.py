@@ -68,7 +68,8 @@ class ImportFrame(wx.Panel):
                 f"Importación exitosa.\n"
                 f"Mazos: {result['decks_imported']}\n"
                 f"Cartas: {result['cards_imported']}\n"
-                f"Omitidas: {result['skipped']}"
+                f"Omitidas: {result['skipped']}\n"
+                f"Archivos de media copiados: {result.get('media_files_copied', 0)}"
             )
             self.status_lbl.SetLabel(msg.replace("\n", " | "))
             wx.MessageBox(
