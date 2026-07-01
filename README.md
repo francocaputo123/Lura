@@ -55,7 +55,7 @@ def sum(a, b):
 
 ## Features
 ### Gestión de mazos (decks)
- 
+
 | Feature | Estado |
 |---------|--------|
 | Crear, editar y eliminar decks | [] |
@@ -63,19 +63,17 @@ def sum(a, b):
 | Ver cuántas cartas están pendientes para hoy por deck | [] |
 
 ### Gestión de Cartas
- 
+
 | Feature | Estado |
 |---------|--------|
 | Crear cartas (frente / dorso) | [] |
-| Editar cartas existentes | [] |
 | Eliminar cartas | [] |
-| Buscar por texto dentro de un deck | [] |
 | Buscar globalmente en todos los decks disponibles | [] |
- 
+
 ---
- 
+
 ### Sesión de Estudio
- 
+
 | Feature | Estado |
 |---------|--------|
 | Mostrar cartas pendientes de hoy | [] |
@@ -84,38 +82,25 @@ def sum(a, b):
 | Barra de progreso durante la sesión de estudio (o simplemente mostrar n/t donde n es las cartas jugadas mientras que t es el total de cartas por jugar) | [] |
 | Pantalla de resumen al terminar | [] |
 | Guardar historial de cada revisión de cartas | [] |
- 
+
 ---
- 
-### Estadísticas
- 
-| Feature | Estado |
-|---------|--------|
-| cartas estudiadas por día (mes actual) | [] |
-| Distribución de calificaciones (1 al 4) | [] |
-| Racha actual de días estudiando | [] |
-| Total de cartas por estado (nueva / aprendiendo / madura) | [] |
-| Tiempo promedio para dominar una carta | [] |
- 
----
- 
+
+
 ### Import / Export
- 
+
 | Feature | Estado |
 |---------|--------|
 | Importar cartas leyendo un .apkg de Anki | [] |
-| Exportar deck a .csv | [] |
-| Formato .csv compatible con Anki | [] |
- 
+
 ---
- 
+
 ### UI / UX
- 
+
 | Feature | Estado |
 |---------|--------|
 | Navegación entre pantallas sin reiniciar la app | [] |
 | Atajos de teclado en la sesión de estudio (Para los gordos Arch como yo, atte: Ezequiel)| [] |
- 
+
 ---
 
 ## Sobre el Algoritmo SM-2
@@ -138,7 +123,7 @@ lura/
 ├── models/ # llamadas a la base de datos
 ├── controllers/ # lógica interna de la app
 └── views/ # vistas
-    ├── frames/ # pantallas 
+    ├── frames/ # pantallas
     └── components/ # componentes reutilizables, onda React
 ```
 
@@ -147,7 +132,7 @@ lura/
 git clone https://github.com/francocaputo123/Lura.git
 cd Lura
 ./setup.sh        # En Linux/Mac
-.\setup.ps1       # En Windows (Trashdown). Nota: En caso de que windows no te deje la ejecución de scripts  porque está deshabilitada. Usar este comando "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process"  
+.\setup.ps1       # En Windows (Trashdown). Nota: En caso de que windows no te deje la ejecución de scripts  porque está deshabilitada. Usar este comando "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process"
 ```
 
 ## Autores
