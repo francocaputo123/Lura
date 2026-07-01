@@ -51,7 +51,8 @@ class DeckRow(wx.Panel):
         self.Refresh()
 
     def _on_click(self, _):
-        wx.MessageBox(f"Abriendo {self.deck['name']}...", "Mazo")
+        from views.frames.study_frame import StudyFrame
+        navigator.show_frame(StudyFrame, deck_title=self.deck['name'], deck_id=self.deck['id'])
 
     def _on_paint(self, event):
         event.Skip()
@@ -198,6 +199,13 @@ class MainFrame(wx.Panel):
             self.create_deck_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.SPACING["PAD_MD"]
         )
 
+        self.delete_deck = wx.Button(footer, label="Borrar mazo")
+        self.delete_deck.SetFont(theme.font(10))
+        self.delete_deck.Bind(wx.EVT_BUTTON, self._on_delete)
+        ftr_sizer.Add(
+            self.delete_deck, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.TOP | wx.BOTTOM, theme.SPACING["PAD_MD"]
+        )
+
         footer.SetSizer(ftr_sizer)
         outer.Add(footer, 0, wx.EXPAND)
 
@@ -228,3 +236,13 @@ class MainFrame(wx.Panel):
 
             dialog.Destroy()
             navigator.show_frame(DeckFrame)
+
+    def _on_delete(self, _) :
+        from ..components.delete_deck import DeleteDeck
+
+        dialog = DeleteDeck(self, "Borrar mazo")
+
+        if dialog.ShowModal() == wx.ID_OK :
+            dialog.Destroy()
+
+        navigator.show_frame(MainFrame)

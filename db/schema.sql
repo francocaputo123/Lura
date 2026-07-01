@@ -25,3 +25,12 @@ CREATE TABLE IF NOT EXISTS reviews (
     quality     INTEGER NOT NULL CHECK(quality BETWEEN 0 AND 5),
     reviewed_at TEXT DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS cards_today (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_id INTEGER NOT NULL REFERENCES cards(id) ON DELETE CASCADE,
+    deck_id INTEGER NOT NULL REFERENCES decks(id) ON DELETE CASCADE,
+    date_fetched DATE DEFAULT (DATE('now')),
+    reviewed INTEGER DEFAULT 0
+);
+
