@@ -5,7 +5,6 @@ from views.components.navbar import Navbar
 from views.frames.deck_frame import DeckFrame
 from views.frames.help_frame import HelpFrame
 from views.frames.main_frame import MainFrame
-from views.frames.stats_frame import StatsFrame
 from views.frames.study_frame import StudyFrame
 from views.navigator import register_app
 
@@ -30,7 +29,6 @@ class App(wx.Frame):
             self.main_panel,
             routes=[
                 ("Mis Mazos", MainFrame),
-                ("Estadísticas", StatsFrame),
                 ("Añadir", DeckFrame),
                 ("Ayuda", HelpFrame),
             ],
