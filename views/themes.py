@@ -13,6 +13,7 @@ PALET = {
     "BG_CATEGORY": wx.Colour(38, 75, 55),
     "BG_NAVBAR": wx.Colour(25, 50, 38),
     "BG_CARD_PRIMARY": wx.Colour(103, 160, 59),
+    "BG_CARD_DESCRIPTION": wx.Colour(82, 128, 47),
 
     "FG_PRIMARY": wx.Colour(230, 240, 235),
     "FG_SECONDARY": wx.Colour(160, 190, 170),

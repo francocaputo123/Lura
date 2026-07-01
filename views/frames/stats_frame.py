@@ -6,28 +6,22 @@ class StatsFrame(wx.Panel):
         super().__init__(parent)
         
         panel_content = wx.Panel(self)
+        selector_panel = wx.Panel(panel_content)
 
         main_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        panel_content_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        selector_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        panel_content_sizer = wx.BoxSizer(wx.VERTICAL)
+        selector_sizer = wx.BoxSizer(wx.VERTICAL)
+        
 
         panel_content.SetBackgroundColour(theme.PALET["BG_CARD_PRIMARY"])
+        selector_panel.SetBackgroundColour(theme.PALET["FG_PRIMARY"])
 
 
-        #Selección de mazo
-        title = wx.StaticText(panel_content, label="Mazo seleccionado: ")
-        title.SetForegroundColour(theme.PALET["FG_PRIMARY"])
-        title.SetFont(theme.font(18, wx.FONTWEIGHT_BOLD))
+        selector = wx.StaticText(selector_panel, label="Seleccionar mazo: ")
+        selector.SetForegroundColour(theme.PALET["BG_DARK"])
+        selector.SetFont(theme.font(18, wx.FONTWEIGHT_BOLD))
         font = wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
-        title.SetFont(font)
-
-        opciones = ["Mazo 1", "Mazo 2", "Mazo 3"]
-        self.combo = wx.ComboBox(panel_content, choices=opciones, pos=(20, 20), style=wx.CB_READONLY)
-        self.Bind(wx.EVT_COMBOBOX, on_seleccionar)
-
-        def on_seleccionar(self, event):
-            self.seleccion = self.combo.GetValue()
-            print(f'Elegiste: {self.seleccion}')
+        selector.SetFont(font)
 
 
 
@@ -35,10 +29,11 @@ class StatsFrame(wx.Panel):
 
 
 
-        selector_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL | wx.LEFT)
-        selector_sizer.Add(self.combo, 1, wx.ALIGN_CENTER_VERTICAL | wx.LEFT)
+
         panel_content.SetSizer(panel_content_sizer)
+        selector_panel.SetSizer(selector_sizer)
 
-
+        panel_content_sizer.Add(selector_panel, 0, wx.EXPAND | wx.ALL, 10)
+        selector_sizer.Add(selector, 1, wx.CENTER | wx.ALL, 10)
         main_sizer.Add(panel_content, 1, wx.ALL | wx.EXPAND, 30)
         self.SetSizer(main_sizer)
