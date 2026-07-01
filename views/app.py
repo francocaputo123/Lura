@@ -33,7 +33,6 @@ class App(wx.Frame):
                 ("Mis Mazos", MainFrame),
                 ("Estadísticas", StatsFrame),
                 ("Añadir", DeckFrame),
-                ("Opciones", OptionsFrame),
                 ("Ayuda", HelpFrame),
             ],
         )
